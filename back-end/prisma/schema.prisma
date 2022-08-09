@@ -9,3 +9,38 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model teachers {
+  id Int @id @default(autoincrement()) @unique
+  name String
+  email String
+  password String
+  image String
+  text String
+  likeId Int
+  likes likes @relation(fields: [likeId], references: [id])
+  mbtiId Int
+  mbti mbti @relation(fields: [mbtiId], references: [id])
+  disciplineId Int
+  disciplines disciplines @relation(fields: [disciplineId], references: [id])
+
+}
+
+model likes {
+  id Int @id @default(autoincrement()) @unique
+  teacherId Int
+  teachers teachers[]
+  numbers Int
+}
+
+model mbti {
+  id Int @id @default(autoincrement()) @unique
+  name String
+  teachers teachers[]
+}
+
+model disciplines {
+  id Int @id @default(autoincrement()) @unique
+  name String
+  teachers teachers[]
+}
