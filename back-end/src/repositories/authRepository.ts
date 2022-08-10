@@ -4,13 +4,22 @@ import prisma from "../config/database.js";
 export type teacherType = Omit<teachers, 'id' | 'likes' | 'wallet'>;
 export type studentType = Omit<students, 'id'>;
 
-async function findByEmail( email: string ) {
-    const data = await prisma.teachers.findUnique({
-        where:{
-            email
-        }
-    });
-
+async function findByEmail( email: string, type: string ) {
+    let data = null;
+    if(type === 'teacher') {
+        data = await prisma.teachers.findUnique({
+            where:{
+                email
+            }
+        });
+    }else {
+        data = await prisma.students.findUnique({
+            where:{
+                email
+            }
+        });
+    }
+    
     return data
 };
 

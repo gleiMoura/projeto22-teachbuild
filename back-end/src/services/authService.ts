@@ -4,10 +4,8 @@ import authRepository from "../repositories/authRepository.js"
 import { teacherType, studentType } from "../repositories/authRepository.js";
 import { SigninType } from "../schemas/signinSchema.js";
 
-export type signType = Omit<SigninType, 'type'>;
-
 export async function registerNewTeacher(teacher: teacherType) {
-    const teacherData = await authRepository.findByEmail(teacher.email);
+    const teacherData = await authRepository.findByEmail(teacher.email, 'teacher');
 
     if (teacherData) {
         throw {
@@ -26,7 +24,7 @@ export async function registerNewTeacher(teacher: teacherType) {
 };
 
 export async function registerNewStudent(student: studentType) {
-    const studentData = await authRepository.findByEmail(student.email);
+    const studentData = await authRepository.findByEmail(student.email, 'student');
 
     if (studentData) {
         throw {
@@ -44,8 +42,8 @@ export async function registerNewStudent(student: studentType) {
     await authRepository.createNewStudent( {...student, password: cryptPassword});
 };
 
-export async function authorizelogin( user: signType ) {
-    const userData = await authRepository.findByEmail( user.email );
+export async function authorizelogin( user: SigninType ) {
+    const userData = await authRepository.findByEmail( user.email, user.type );
     if( !userData ) {
         throw {
             response: {
