@@ -1,6 +1,7 @@
 import joi from "joi";
+import { teacherType } from "../repositories/teacherRepository.js";
 
-const teacherSchema = joi.object({
+const teacherSchema = joi.object<teacherType>({
     name: joi.string().max(40).required(),
     email: joi.string().email().required(),
     password: joi.string().min(6).required(),
