@@ -1,12 +1,9 @@
 import { faker } from "@faker-js/faker";
 import prisma from "../../src/config/database.js";
+import { teacherType, studentType } from "../../src/repositories/authRepository.js";
 
 function createTeacher() {
-    function randomNumber(min: number, max: number): number {
-        return Math.round(Math.random() * (max - min) + min);
-    };
-
-    const teacherData =
+    const teacherData: teacherType =
     {
         name: faker.name.firstName(),
         image: faker.internet.url(),
@@ -19,6 +16,21 @@ function createTeacher() {
 
     return teacherData;
 };
+
+async function createStudent() {
+
+    const teacherData: studentType =
+    {
+        name: faker.name.firstName(),
+        image: faker.internet.url(),
+        text: faker.commerce.department(),
+        mbtiId: randomNumber(1, 16),
+        password: faker.internet.password(),
+        email: faker.internet.email()
+    };
+
+    return teacherData;
+}
 
 async function deleteAllData() {
     await prisma.$transaction([
@@ -34,10 +46,15 @@ async function deleteAllData() {
         prisma.$executeRaw`TRUNCATE TABLE mbti CASCADE`
 
     ]);
-}
+};
+
+   function randomNumber(min: number, max: number): number {
+        return Math.round(Math.random() * (max - min) + min);
+    };
 
 const teacherFactory = {
     createTeacher,
+    createStudent,
     deleteAllData
 };
 

@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import app from "../../app.js";
 import prisma from "../../src/config/database.js"
-import teacherFactory from "../factories/teacherFactory.js";
+import authFactory from "../factories/authFactory.js";
 
 beforeEach(async () => {
    await prisma.$executeRaw` TRUNCATE teachers CASCADE `;
@@ -9,7 +9,7 @@ beforeEach(async () => {
 
 describe("Teachers test - Integration", () => {
     it("Register a teacher", async () => {
-        const teacher = teacherFactory.createTeacher();
+        const teacher = authFactory.createTeacher();
         const response = await supertest(app).post("/teacher/signup").send(teacher);
         const status = response.status;
 
@@ -24,6 +24,21 @@ describe("Teachers test - Integration", () => {
         });
 
         expect(teacher.email).toBe(findTeacherInDatabase.email);
+        expect(status).toEqual(201);
+    });
+
+    it("Register a student",  async () => {
+        const student = authFactory.createTeacher();
+        const response = await supertest(app).post("/teacher/signup").send(student);
+        const status = response.status;
+
+        const findStudentInDatabase = await prisma.teachers.findUnique({
+            where: {
+                email: student.email
+            }
+        });
+
+        expect(student.email).toBe(findStudentInDatabase.email);
         expect(status).toEqual(201);
     });
 });
