@@ -2,7 +2,7 @@ import Router from "express";
 import schemaValidator from "../middlewares/schemaValidator.js";
 import teacherSchema from "../schemas/teacherSchema.js";
 import studentSchema from "../schemas/studentSchema.js";
-import { createTeacher } from "../controllers/teacherController.js";
+import { createTeacher, createStudent } from "../controllers/authController.js";
 
 const authRouter = Router();
 
