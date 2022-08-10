@@ -1,11 +1,13 @@
 import joi from "joi";
 
-export interface Singin {
-    email: String,
-    password: String
+export interface SigninType {
+    type: string,
+    email: string,
+    password: string,
 }
 
-const signinSchema = joi.object<Singin>({
+const signinSchema = joi.object<SigninType>({
+    type: joi.string().required(),
     email: joi.string().email().required(),
     password: joi.string().required()
 });

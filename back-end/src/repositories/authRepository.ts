@@ -30,6 +30,14 @@ async function createNewStudent(student: studentType) {
     return data
 };
 
+async function createNewSession(token: string, userId: number) {
+    const session = await prisma.sessions.create({
+        data: {token, userId}
+    });
+
+    return session
+}
+
 const authRepository = {
     findByEmail,
     createNewTeacher,

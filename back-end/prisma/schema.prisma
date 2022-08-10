@@ -21,6 +21,12 @@ model mbti {
   studentes students[]
 }
 
+model sessions {
+  id Int @id @unique @default(autoincrement())
+  userId Int
+  token String
+}
+
 model teachers {
   id           Int         @id @unique @default(autoincrement())
   name         String
