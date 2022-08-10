@@ -18,6 +18,7 @@ model mbti {
   name     String
   link     String
   teachers teachers[]
+  studentes students[]
 }
 
 model teachers {
@@ -33,4 +34,14 @@ model teachers {
   likes        Int @default(0)        
   disciplines  disciplines @relation(fields: [disciplineId], references: [id])
   mbti         mbti        @relation(fields: [mbtiId], references: [id])
+}
+
+model students {
+  id Int @id @unique @default(autoincrement())
+  name String
+  email String @unique
+  image String
+  text String
+  mbtiId Int
+  mbti mbti @relation(fields: [mbtiId], references: [id])
 }
