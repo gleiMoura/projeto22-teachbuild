@@ -1,8 +1,8 @@
 import Router from "express";
-import teacherRouter from "./teacherRouter.js";
+import authRouter from "./authRouter.js";
 
 const router = Router();
 
-router.use(teacherRouter);
+router.use(authRouter);
 
 export default router;
