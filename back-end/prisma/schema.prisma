@@ -7,36 +7,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model teachers {
-  id           Int         @id @unique @default(autoincrement())
-  name         String
-  email        String @unique
-  password     String
-  image        String
-  text         String
-  likeId       Int 
-  mbtiId       Int 
-  disciplineId Int
-  disciplines  disciplines @relation(fields: [disciplineId], references: [id])
-  likes        likes       @relation(fields: [likeId], references: [id])
-  mbti         mbti        @relation(fields: [mbtiId], references: [id])
-}
-
-model likes {
-  id        Int        @id @unique @default(autoincrement())
-  teacherId Int
-  numbers   Int
-  teachers  teachers[]
+model disciplines {
+  id       Int        @id @unique @default(autoincrement())
+  name     String
+  teachers teachers[]
 }
 
 model mbti {
   id       Int        @id @unique @default(autoincrement())
   name     String
+  link     String
   teachers teachers[]
 }
 
-model disciplines {
-  id       Int        @id @unique @default(autoincrement())
-  name     String
-  teachers teachers[]
+model teachers {
+  id           Int         @id @unique @default(autoincrement())
+  name         String
+  email        String      @unique
+  password     String
+  image        String
+  text         String
+  mbtiId       Int
+  disciplineId Int
+  wallet       Float @db.Real  @default(0)
+  likes        Int @default(0)        
+  disciplines  disciplines @relation(fields: [disciplineId], references: [id])
+  mbti         mbti        @relation(fields: [mbtiId], references: [id])
 }

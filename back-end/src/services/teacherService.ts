@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { findTecharByEmail, createNewTeacher } from "../repositories/teacherRepository.js";
-import { createTeacherData } from "../repositories/teacherRepository.js";
+import { findTeacharByEmail, createNewTeacher } from "../repositories/teacherRepository.js";
+import { teacherType } from "../repositories/teacherRepository.js";
 
-export async function registerNewTeacher(teacher: createTeacherData) {
-    const teacherData = await findTecharByEmail(teacher.email);
+export async function registerNewTeacher(teacher: teacherType) {
+    const teacherData = await findTeacharByEmail(teacher.email);
 
     if (teacherData) {
         throw {
@@ -20,4 +20,4 @@ export async function registerNewTeacher(teacher: createTeacherData) {
     delete teacher.password;
 
     await createNewTeacher( {...teacher, password: cryptPassword});
-}
+};

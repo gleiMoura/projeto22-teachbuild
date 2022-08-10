@@ -1,9 +1,9 @@
 import { teachers } from "@prisma/client";
 import prisma from "../config/database.js";
 
-export type createTeacherData = Omit<teachers,"id">;
+export type teacherType = Omit<teachers, 'id' | 'likes' | 'wallet'>;
 
-export async function findTecharByEmail( email: string ) {
+export async function findTeacharByEmail( email: string ) {
     const data = await prisma.teachers.findUnique({
         where:{
             email
@@ -13,10 +13,10 @@ export async function findTecharByEmail( email: string ) {
     return data
 };
 
-export async function createNewTeacher(teacher: createTeacherData) {
+export async function createNewTeacher(teacher: teacherType) {
     const data = await prisma.teachers.create({
         data: teacher
     });
 
     return data
-}
+};
