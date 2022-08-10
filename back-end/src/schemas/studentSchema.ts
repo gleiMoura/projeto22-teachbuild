@@ -6,6 +6,7 @@ const studentSchema = joi.object({
     image: joi.string().uri().required(),
     text: joi.string().required(),
     mbtiId: joi.number().required(),
+    password: joi.string().required()
 });
 
 export default studentSchema;

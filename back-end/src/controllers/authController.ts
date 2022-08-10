@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { registerNewTeacher } from "../services/teacherService.js";
+import { registerNewTeacher, registerNewStudent } from "../services/authService.js";
 
 export async function createTeacher(req: Request, res: Response) {
     const teacher = req.body;

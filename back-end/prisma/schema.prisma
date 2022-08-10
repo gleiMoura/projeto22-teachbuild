@@ -43,5 +43,6 @@ model students {
   image String
   text String
   mbtiId Int
+  password String
   mbti mbti @relation(fields: [mbtiId], references: [id])
 }

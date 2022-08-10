@@ -1,5 +1,5 @@
 import joi from "joi";
-import { teacherType } from "../repositories/teacherRepository.js";
+import { teacherType } from "../repositories/authRepository.js";
 
 const teacherSchema = joi.object<teacherType>({
     name: joi.string().max(40).required(),
