@@ -1,6 +1,7 @@
 import joi from "joi";
+import { studentType } from "../repositories/authRepository.js";
 
-const studentSchema = joi.object({
+const studentSchema = joi.object<studentType>({
     name: joi.string().required(),
     email: joi.string().required(),
     image: joi.string().uri().required(),
