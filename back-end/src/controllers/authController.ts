@@ -4,17 +4,21 @@ import { registerNewTeacher, registerNewStudent, authorizelogin } from "../servi
 export async function createTeacher(req: Request, res: Response) {
     const teacher = req.body;
 
-    await registerNewTeacher( teacher );
+    const teacherData = await registerNewTeacher( teacher );
 
-    res.sendStatus(201);
+    delete(teacherData.password);
+
+    res.status(201).send(teacherData);
 };
 
 export async function createStudent(req: Request, res: Response) {
     const student = req.body;
 
-    await registerNewStudent( student );
+    const studentData = await registerNewStudent( student );
 
-    res.sendStatus(201);
+    delete(studentData.password);
+
+    res.status(201).send(studentData);
 };
 
 export async function doSignin(req: Request, res: Response) {

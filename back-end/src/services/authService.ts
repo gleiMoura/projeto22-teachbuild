@@ -20,7 +20,9 @@ export async function registerNewTeacher(teacher: teacherType) {
 
     delete teacher.password;
 
-    await authRepository.createNewTeacher( {...teacher, password: cryptPassword});
+    const data = await authRepository.createNewTeacher( {...teacher, password: cryptPassword});
+
+    return data
 };
 
 export async function registerNewStudent(student: studentType) {
@@ -39,7 +41,9 @@ export async function registerNewStudent(student: studentType) {
 
     delete student.password;
 
-    await authRepository.createNewStudent( {...student, password: cryptPassword});
+    const data = await authRepository.createNewStudent( {...student, password: cryptPassword});
+
+    return data
 };
 
 export async function authorizelogin( user: SigninType ) {
