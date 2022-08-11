@@ -1,10 +1,5 @@
 import joi from "joi";
-
-export interface SigninType {
-    type: string,
-    email: string,
-    password: string,
-}
+import { SigninType } from "../repositories/authRepository";
 
 const signinSchema = joi.object<SigninType>({
     type: joi.string().required(),

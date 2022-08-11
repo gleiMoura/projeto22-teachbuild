@@ -1,6 +1,22 @@
 import { faker } from "@faker-js/faker";
 import prisma from "../../src/config/database.js";
-import { teacherType, studentType } from "../../src/repositories/authRepository.js";
+import { teacherType, studentType} from "../../src/repositories/authRepository.js";
+
+async function deleteAllData() {
+    await prisma.$transaction([
+        prisma.$executeRaw`ALTER SEQUENCE teachers_id_seq RESTART WITH 1`,
+        prisma.$executeRaw`ALTER SEQUENCE disciplines_id_seq RESTART WITH 1`,
+        prisma.$executeRaw`ALTER SEQUENCE mbti_id_seq RESTART WITH 1`,
+
+    ]);
+
+    await prisma.$transaction([
+        prisma.$executeRaw`TRUNCATE TABLE teachers`,
+        prisma.$executeRaw`TRUNCATE TABLE disciplines CASCADE`,
+        prisma.$executeRaw`TRUNCATE TABLE mbti CASCADE`
+
+    ]);
+};
 
 function createTeacher() {
     const teacherData: teacherType =
@@ -19,7 +35,7 @@ function createTeacher() {
 
 async function createStudent() {
 
-    const teacherData: studentType =
+    const studentData: studentType =
     {
         name: faker.name.firstName(),
         image: faker.internet.url(),
@@ -29,28 +45,12 @@ async function createStudent() {
         email: faker.internet.email()
     };
 
-    return teacherData;
-}
-
-async function deleteAllData() {
-    await prisma.$transaction([
-        prisma.$executeRaw`ALTER SEQUENCE teachers_id_seq RESTART WITH 1`,
-        prisma.$executeRaw`ALTER SEQUENCE disciplines_id_seq RESTART WITH 1`,
-        prisma.$executeRaw`ALTER SEQUENCE mbti_id_seq RESTART WITH 1`,
-
-    ]);
-
-    await prisma.$transaction([
-        prisma.$executeRaw`TRUNCATE TABLE teachers`,
-        prisma.$executeRaw`TRUNCATE TABLE disciplines CASCADE`,
-        prisma.$executeRaw`TRUNCATE TABLE mbti CASCADE`
-
-    ]);
+    return studentData;
 };
 
-   function randomNumber(min: number, max: number): number {
-        return Math.round(Math.random() * (max - min) + min);
-    };
+function randomNumber(min: number, max: number): number {
+    return Math.round(Math.random() * (max - min) + min);
+};
 
 const teacherFactory = {
     createTeacher,

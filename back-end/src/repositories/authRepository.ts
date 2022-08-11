@@ -4,22 +4,28 @@ import prisma from "../config/database.js";
 export type teacherType = Omit<teachers, 'id' | 'likes' | 'wallet'>;
 export type studentType = Omit<students, 'id'>;
 
-async function findByEmail( email: string, type: string ) {
+export interface SigninType {
+    type: string,
+    email: string,
+    password: string,
+}
+
+async function findByEmail(email: string, type: string) {
     let data = null;
-    if(type === 'teacher') {
+    if (type === 'teacher') {
         data = await prisma.teachers.findUnique({
-            where:{
+            where: {
                 email
             }
         });
-    }else {
+    } else {
         data = await prisma.students.findUnique({
-            where:{
+            where: {
                 email
             }
         });
     }
-    
+
     return data
 };
 
@@ -41,7 +47,7 @@ async function createNewStudent(student: studentType) {
 
 async function createNewSession(token: string, userId: number) {
     const session = await prisma.sessions.create({
-        data: {token, userId}
+        data: { token, userId }
     });
 
     return session
@@ -50,7 +56,8 @@ async function createNewSession(token: string, userId: number) {
 const authRepository = {
     findByEmail,
     createNewTeacher,
-    createNewStudent
+    createNewStudent,
+    createNewSession
 };
 
 export default authRepository;

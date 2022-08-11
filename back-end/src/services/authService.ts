@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import authRepository from "../repositories/authRepository.js"
 import { teacherType, studentType } from "../repositories/authRepository.js";
-import { SigninType } from "../schemas/signinSchema.js";
+import { SigninType } from "../repositories/authRepository.js";
 
 export async function registerNewTeacher(teacher: teacherType) {
     const teacherData = await authRepository.findByEmail(teacher.email, 'teacher');
@@ -65,6 +65,8 @@ export async function authorizelogin( user: SigninType ) {
     };
 
     const token = jwt.sign({ userId: userData.id }, process.env.SECRET, {expiresIn: 36000});
+
+    await authRepository.createNewSession(token, userData.id);
 
     return {email: user.email, token}
 };

@@ -1,4 +1,5 @@
 import supertest from "supertest";
+import bcrypt from "bcrypt";
 import app from "../../app.js";
 import prisma from "../../src/config/database.js"
 import authFactory from "../factories/authFactory.js";
@@ -12,10 +13,6 @@ describe("Teachers test - Integration", () => {
         const teacher = authFactory.createTeacher();
         const response = await supertest(app).post("/teacher/signup").send(teacher);
         const status = response.status;
-
-        console.log("response -->", response.body)
-        console.log("response status --> ", response.status)
-        console.log("teacher --> ", teacher)
 
         const findTeacherInDatabase = await prisma.teachers.findUnique({
             where: {
@@ -40,6 +37,36 @@ describe("Teachers test - Integration", () => {
 
         expect(student.email).toBe(findStudentInDatabase.email);
         expect(status).toEqual(201);
+    });
+
+    it("Do teacher signin", async () => {
+        const studentData = await authFactory.createStudent();
+
+        const cryptpassword = await bcrypt.hash(studentData.password, 10);
+
+        await prisma.students.create({
+            data: {...studentData, password: cryptpassword}
+        });
+ 
+        const responseStudent = await supertest(app).post("/signin").send({ type: 'student', email: studentData.email, password: studentData.password });
+
+        expect(responseStudent.status).toBe(200);
+        expect(responseStudent.text).not.toBeUndefined();
+    });
+
+    it("Do student signin", async () => {
+        const teacherData = authFactory.createTeacher();
+
+        const cryptpassword = await bcrypt.hash(teacherData.password, 10);
+
+        await prisma.teachers.create({
+            data: {...teacherData, password: cryptpassword}
+        });
+
+        const responseTeacher = await supertest(app).post("/signin").send({ type: 'teacher', email: teacherData.email, password: teacherData.password });
+        
+        expect(responseTeacher.status).toBe(200);
+        expect(responseTeacher.text).not.toBeUndefined();
     });
 });
 
