@@ -15,12 +15,18 @@ function loginUser(body) {
 function getTeachers(config) {
     const promise = axios.get(`${BASE_URL}/teachers`, config);
     return promise;
+};
+
+function getStudents(config) {
+    const promise = axios.get(`${BASE_URL}/students`, config);
+    return promise;
 }
 
 const API = {
     createUser,
     loginUser,
-    getTeachers
+    getTeachers,
+    getStudents
 };
 
 export default API;

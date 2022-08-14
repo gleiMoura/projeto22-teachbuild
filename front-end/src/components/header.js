@@ -87,9 +87,9 @@ const Header = styled.header`
   }
 
   .second {
-    width: 200px;
+    width: 300px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
   }
 
