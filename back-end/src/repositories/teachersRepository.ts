@@ -12,7 +12,8 @@ export async function findTeachers() {
                 select: {name: true}
             },
             likes: true,
-            wallet: true
+            wallet: true,
+            text: true
         },
         orderBy: { likes: "desc" },
         take: 10
