@@ -51,13 +51,43 @@ async function createNewSession(token: string, userId: number) {
     });
 
     return session
+};
+
+async function getDataByEmailAndType(email: string, type: string) {
+    let data = null
+    if(type === "teacher") {
+        data = prisma.teachers.findFirst({
+            select:{
+                name: true,
+                image: true,
+                text:true,
+                password: true,
+                disciplines: {},
+                mbti: {},
+            }
+        })
+    }else{
+        data = prisma.students.findFirst({
+            select:{
+                id: true,
+                name: true,
+                password: true,
+                image: true,
+                text:true,
+                mbti: {},
+            }
+        })
+    };
+
+    return data
 }
 
 const authRepository = {
     findByEmail,
     createNewTeacher,
     createNewStudent,
-    createNewSession
+    createNewSession,
+    getDataByEmailAndType
 };
 
 export default authRepository;

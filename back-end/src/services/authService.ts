@@ -47,7 +47,7 @@ export async function registerNewStudent(student: studentType) {
 };
 
 export async function authorizelogin( user: SigninType ) {
-    const userData = await authRepository.findByEmail( user.email, user.type );
+    const userData = await authRepository.getDataByEmailAndType( user.email, user.type );
     if( !userData ) {
         throw {
             response: {
@@ -72,5 +72,7 @@ export async function authorizelogin( user: SigninType ) {
 
     await authRepository.createNewSession(token, userData.id);
 
-    return {email: user.email, token}
+    delete(userData.password);
+
+    return {...userData, token}
 };
