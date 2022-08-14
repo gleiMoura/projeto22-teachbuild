@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import API from "../repository/API";
 import authStyle from "../styles/authStyle";
 import teachImage from "../assets/image/teachImage.jpg";
-import loadigGif from "../assets/image/eclipse.gif";
 
 const { Main, SiteInformation, Forms, SelectLabel, AuthInput, AuthSelect, AuthButton, StyledLink } = authStyle;
 
 export default function Signin() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false); //show load image
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [valid, setValid] = useState(true);
 
     const allMBTI = [
         'INTP – Lógico',
@@ -47,23 +48,26 @@ export default function Signin() {
             disciplineId: parseInt(e.target[7].value)
         };
 
-        console.log(body)
-
-        API.createUser(type,body)
+        API.createUser(type, body)
             .then(response => {
-                console.log(response);
-                navigate("/timeline");
+                navigate("/");
             }).catch(error => {
                 setLoading(false);
-                console.log(error);
+                setValid(false)
+                setErrorMessage(error.message)
+                console.log("createUser error -->", error);
             });
     };
 
     function SendData() {
         if (loading) {
             return (
-                <AuthButton>
-                    <img src={loadigGif} alt="loading" />
+                <AuthButton
+                    type="submit"
+                    disabled={loading ? true : false}
+                    style={loading ? { opacity: "0.7" } : {}}
+                >
+                    carregando...
                 </AuthButton>
             );
         } else {
@@ -137,6 +141,7 @@ export default function Signin() {
                     <SendData />
                 </form>
                 <StyledLink to="/">You have an account? Do sign in!</StyledLink>
+                {!valid ? <p>{errorMessage}</p> : <></>}
             </Forms>
         </Main>
     );

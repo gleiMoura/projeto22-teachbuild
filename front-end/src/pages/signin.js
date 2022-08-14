@@ -35,7 +35,13 @@ export default function Signin() {
     function SendData() {
         if(loading){
             return(
-                <img src="" alt="loading" />
+                <AuthButton
+                    type="submit"
+                    disabled={loading ? true : false}
+                    style={loading ? { opacity: "0.7" } : {}}
+                >
+                    carregando...
+                </AuthButton>
             );
         }else{
             return (
@@ -77,8 +83,8 @@ export default function Signin() {
                     <SendData/>
                 </form>
                 <StyledLink to="/signup">First time? Create an account!</StyledLink>
+                {!valid ? <p>Email or password incorrect...</p> : <></>}
             </Forms>
-            {!valid ? <p>Email or password incorrect...</p> : <></>}
         </Main>
     );
 };

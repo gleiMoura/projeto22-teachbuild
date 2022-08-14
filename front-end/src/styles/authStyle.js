@@ -85,11 +85,11 @@ const Forms = styled.section`
   }
 
   p {
-    margin-top: 25px;
+    margin-top: 10px;
     text-align: center;
 
     color: var(--error);
-    font-size: 23px;
+    font-size: 15px;
     font-weight: 700;
   }
 
@@ -154,6 +154,11 @@ const AuthButton = styled.button`
   font-family: "Oswald", sans-serif;
   color: #000;
   cursor: pointer;
+
+  img {
+    width: 22px;
+    height: 22px;
+  }
 `;
 
 const StyledLink = styled(Link)`
