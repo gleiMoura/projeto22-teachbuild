@@ -74,5 +74,5 @@ export async function authorizelogin( user: SigninType ) {
 
     delete(userData.password);
 
-    return {...userData, token}
+    return {...userData, type: user.type, token}
 };

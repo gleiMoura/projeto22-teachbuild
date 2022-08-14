@@ -56,8 +56,10 @@ async function createNewSession(token: string, userId: number) {
 async function getDataByEmailAndType(email: string, type: string) {
     let data = null
     if(type === "teacher") {
-        data = prisma.teachers.findFirst({
+        data = prisma.teachers.findUnique({
+            where:{email},
             select:{
+                id: true,
                 name: true,
                 image: true,
                 text:true,
@@ -68,6 +70,7 @@ async function getDataByEmailAndType(email: string, type: string) {
         })
     }else{
         data = prisma.students.findFirst({
+            where:{email},
             select:{
                 id: true,
                 name: true,
