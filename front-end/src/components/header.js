@@ -6,7 +6,6 @@ import { IoIosExit } from "react-icons/io";
 export default function Timeline() {
     const navigate = useNavigate();
     const userData = JSON.parse(localStorage.getItem("data"));
-    console.log("userData -->", userData);
     const [thereIsToken, setThereIsToken] = useState(false);
 
     function logout() {
