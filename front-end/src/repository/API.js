@@ -2,13 +2,13 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:4000";
 
-function createUser(user) {
-    const promise = axios.post(`${BASE_URL}/${user}/signup`, body); 
+function createUser(teacherOrStudent, body) {
+    const promise = axios.post(`${BASE_URL}/${teacherOrStudent}/signup`, body); 
     return promise;
 };
 
-function loginUser(user) {
-    const promise = axios.post(`${BASE_URL}/${user}/signin`);
+function loginUser(body) {
+    const promise = axios.post(`${BASE_URL}/signin`, body);
     return promise;
 };
 

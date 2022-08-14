@@ -2,13 +2,13 @@
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 
-    --theme: #151515;
-    --button--theme: #1877f2;
+    --theme: #000;
+    --button--theme: #fedc00;
     --error: #E54141;
 }
 
 body {
-    background-color: #ce7272;
+    background-color: #000;
 
     font-family: 'Lato', sans-serif;
     /* font-family: 'Passion One', cursive; */
