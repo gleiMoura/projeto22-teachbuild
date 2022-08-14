@@ -4,7 +4,7 @@ import API from "../repository/API";
 import authStyle from "../styles/authStyle";
 import teachImage from "../assets/image/teachImage.jpg";
 
-const { Main, SiteInformation, Forms, SelectLabel, AuthInput, AuthSelect, AuthButton, StyledLink } = authStyle;
+const { Main, SiteInformation, Forms, AuthInput, AuthSelect, AuthButton, StyledLink } = authStyle;
 
 export default function Signin() {
     const navigate = useNavigate();

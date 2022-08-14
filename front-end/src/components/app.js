@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import SignIn from "../pages/signin";
 import SignUp from "../pages/signup";
-import Timeline from "../pages/timeline"
+import UsersPage from "../pages/usersPage"
 
 export default function App() {
     return (
@@ -10,7 +10,7 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/timeline" element={<Timeline />} />
+                <Route path="/userspage" element={<UsersPage />} />
             </Routes>
         </BrowserRouter>
     );

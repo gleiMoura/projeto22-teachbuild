@@ -8,7 +8,7 @@ const { Main, SiteInformation, Forms, AuthInput, SelectLabel, AuthSelect, AuthBu
 
 export default function Signin() {
     const navigate = useNavigate();
-    const [valid, setValid] = useState(true); // check if email and password are correct
+    const [valid, setValid] = useState(true);
     const [loading, setLoading] = useState(false); //show load image
 
     function submitForm(e) {
@@ -24,7 +24,7 @@ export default function Signin() {
         API.loginUser(body)
             .then(response => {
                 localStorage.setItem("data", JSON.stringify(response.data));
-                navigate("/timeline");
+                navigate("/userspage");
             }).catch(error => {
                 setValid(false);
                 setLoading(false);
