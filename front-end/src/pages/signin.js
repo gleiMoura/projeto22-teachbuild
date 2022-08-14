@@ -59,10 +59,9 @@ export default function Signin() {
             </SiteInformation>
             <Forms>
                 <form onSubmit={e => submitForm(e)}>
-                    <SelectLabel for="type">Who are you?</SelectLabel>
-                    <AuthSelect id="type" name="type">
-                        <option value="teacher">Teacher</option>
-                        <option value="student">Student</option>
+                    <AuthSelect id="type" name="type" placeholder="who are you?">
+                        <option value="teacher">I'm a teacher</option>
+                        <option value="student">I'm a student</option>
                     </AuthSelect>
                     <AuthInput
                         type="email"
@@ -77,11 +76,8 @@ export default function Signin() {
                     ></AuthInput>
                     <SendData/>
                 </form>
-                <StyledLink to="/sign-up">First time? Create an account!</StyledLink>
+                <StyledLink to="/signup">First time? Create an account!</StyledLink>
             </Forms>
-
-            
-
             {!valid ? <p>Email or password incorrect...</p> : <></>}
         </Main>
     );

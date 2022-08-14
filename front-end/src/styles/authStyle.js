@@ -123,8 +123,6 @@ const SelectLabel = styled.label`
     border-radius: 6px;
 
     font-size: 22px;
-    margin: 5px 0;
-    padding: 0 17px;
 
     font-family: "Oswald", sans-serif;
     color: #fedc00;
