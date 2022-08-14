@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../repository/API";
 import authStyle from "../styles/authStyle";
-import teachImage from "../assets/teachImage.jpg";
+import teachImage from "../assets/image/teachImage.jpg";
 
 const { Main, SiteInformation, Forms, AuthInput, SelectLabel, AuthSelect, AuthButton, StyledLink } = authStyle;
 

@@ -2,13 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../repository/API";
 import authStyle from "../styles/authStyle";
-import teachImage from "../assets/teachImage.jpg";
+import teachImage from "../assets/image/teachImage.jpg";
+import loadigGif from "../assets/image/eclipse.gif";
 
 const { Main, SiteInformation, Forms, SelectLabel, AuthInput, AuthSelect, AuthButton, StyledLink } = authStyle;
 
 export default function Signin() {
     const navigate = useNavigate();
-    const [valid, setValid] = useState(true); // check if email and password are correct
     const [loading, setLoading] = useState(false); //show load image
 
     const allMBTI = [
@@ -35,22 +35,25 @@ export default function Signin() {
         e.preventDefault();
         setLoading(true);
 
+        const type = e.target[0].value;
+
         const body = {
             name: e.target[1].value,
             email: e.target[2].value,
             password: e.target[3].value,
             image: e.target[4].value,
             text: e.target[5].value,
-            mbtiId: e.target[6].value,
-            disciplineId: e.target[7].value
+            mbtiId: parseInt(e.target[6].value),
+            disciplineId: parseInt(e.target[7].value)
         };
 
-        API.loginUser(body)
+        console.log(body)
+
+        API.createUser(type,body)
             .then(response => {
-                localStorage.setItem("data", JSON.stringify(response.data));
+                console.log(response);
                 navigate("/timeline");
             }).catch(error => {
-                setValid(false);
                 setLoading(false);
                 console.log(error);
             });
@@ -59,7 +62,9 @@ export default function Signin() {
     function SendData() {
         if (loading) {
             return (
-                <img src="" alt="loading" />
+                <AuthButton>
+                    <img src={loadigGif} alt="loading" />
+                </AuthButton>
             );
         } else {
             return (
@@ -133,10 +138,6 @@ export default function Signin() {
                 </form>
                 <StyledLink to="/">You have an account? Do sign in!</StyledLink>
             </Forms>
-
-
-
-            {!valid ? <p>Email or password incorrect...</p> : <></>}
         </Main>
     );
 };
