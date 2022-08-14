@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { IoIosExit } from "react-icons/io";
 
@@ -45,7 +45,9 @@ const Header = styled.header`
     align-items: center;
     color: white;
     margin: 20px 20px;
-    border-bottom: 1px solid #fedc00;
+    padding: 0 20px;
+    box-shadow: 1px 1px 18px #fedc00;
+    background-color: #000;
 
     h1 {
     width: 99px;
