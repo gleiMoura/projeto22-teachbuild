@@ -27,6 +27,19 @@ model sessions {
   token String
 }
 
+model requests {
+  id Int @id @unique @default(autoincrement())
+  studentId Int
+  teacherId Int
+  text String
+  start String
+  day String
+  time String
+  accept Boolean @default(false)
+  students         students        @relation(fields: [studentId], references: [id])
+  teachers         teachers        @relation(fields: [teacherId], references: [id])
+}
+
 model teachers {
   id           Int         @id @unique @default(autoincrement())
   name         String
@@ -40,6 +53,7 @@ model teachers {
   likes        Int @default(0)        
   disciplines  disciplines @relation(fields: [disciplineId], references: [id])
   mbti         mbti        @relation(fields: [mbtiId], references: [id])
+  requests requests[]
 }
 
 model students {
@@ -51,4 +65,5 @@ model students {
   mbtiId Int
   password String
   mbti mbti @relation(fields: [mbtiId], references: [id])
+  requests requests[]
 }
