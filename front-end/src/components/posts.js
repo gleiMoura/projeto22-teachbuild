@@ -36,6 +36,7 @@ export default function Posts() {
     if (userData.type === "student") {
         return (
             <>
+                <Title>Look for the best teacher here</Title>
                 {teachers.map(teacher => {
                     return (
                         <Section>
@@ -182,4 +183,11 @@ const Buttons = styled.section`
         border-radius: 6px;
         cursor: pointer;
     }
+`
+
+const Title = styled.div`
+    font-family: 'Oswald';
+    color: #fedc00;
+    font-size: 22px;
+    margin-top: 10px;
 `

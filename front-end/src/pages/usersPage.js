@@ -28,12 +28,12 @@ export default function Timeline() {
 
 const Main = styled.div`
     display: flex;
+    min-height: 100vh;
     flex-direction: column;
     align-items: center;
     background-color: #333;
-    overflow-y: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     scroll-behavior: auto;
 `;
-
-
 
