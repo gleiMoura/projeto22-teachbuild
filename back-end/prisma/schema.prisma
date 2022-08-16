@@ -31,11 +31,9 @@ model requests {
   id Int @id @unique @default(autoincrement())
   studentId Int
   teacherId Int
-  text String
-  start String
+  hourstart String
+  hourend String
   day String
-  time String
-  accept Boolean @default(false)
   students         students        @relation(fields: [studentId], references: [id])
   teachers         teachers        @relation(fields: [teacherId], references: [id])
 }
