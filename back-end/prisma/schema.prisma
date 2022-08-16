@@ -29,12 +29,11 @@ model sessions {
 
 model requests {
   id Int @id @unique @default(autoincrement())
-  studentId Int
+  studentId Int?
   teacherId Int
   hourstart String
-  hourend String
   day String
-  students         students        @relation(fields: [studentId], references: [id])
+  valid Boolean @default(false)
   teachers         teachers        @relation(fields: [teacherId], references: [id])
 }
 
@@ -63,5 +62,4 @@ model students {
   mbtiId Int
   password String
   mbti mbti @relation(fields: [mbtiId], references: [id])
-  requests requests[]
 }
