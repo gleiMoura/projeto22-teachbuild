@@ -23,9 +23,20 @@ async function createNewRequest( request: requestType ) {
     return requestData
 };
 
+async function getRequestsByTeacherId( teacherId: string ) {
+    const id = parseInt(teacherId);
+
+    const requests = prisma.requests.findMany({
+        where: {teacherId: id}
+    });
+
+    return requests;
+};
+
 const requestRepository = {
     createNewRequest,
-    findRequest
+    findRequest,
+    getRequestsByTeacherId
 };
 
 export default requestRepository;

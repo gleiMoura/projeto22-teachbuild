@@ -16,4 +16,19 @@ export async function createClassRequest(request: requestType) {
     const data = await requestRepository.createNewRequest(request);
 
     return data
-}
+};
+
+export async function getAllRequests(teacherId: string) {
+    const requests = await requestRepository.getRequestsByTeacherId(teacherId);
+
+    if(!requests) {
+        throw {
+            response: {
+                message: "This teacher is not in database",
+                status: 404
+            }
+        }
+    }
+
+    return requests;
+};
