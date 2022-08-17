@@ -7,7 +7,9 @@ export default function TeacherPage() {
     const userData = JSON.parse(localStorage.getItem("data"));
     const days = ["seg", "ter", "qua", "qui", "sex", "sab", "dom"];
     const hours = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
-    const requestsHours = []; //request with hours from table;
+    const allRequests = []; //request with hours from table;
+    const [chooseRequestView, setChooseRequestView] = useState(true);
+    const [requestsData, setRequestsData] = useState([]);
 
     const config = {
         headers: {
@@ -15,20 +17,24 @@ export default function TeacherPage() {
         }
     };
 
-   /*  useEffect(() => {
-        API.createRequests(config, allRequests)
-    }, []) */
+    useEffect(() => {
+        API.getRequestsToTeacher(config, userData.id)
+            .then(response => {
+                setRequestsData(response.data);
+            }).catch(error => {
+                console.log(error);
+            })
+    }, []);
 
     function Hour({ hourstart, i, day }) {
-        console.log(requestsHours)
         const [click, setClick] = useState(true);
         return (
             <div className={click ? "no" : "yes"} onClick={() => {
                 setClick(!click);
                 if (click === true) {
-                    requestsHours.push({day, hourstart, teacherId: userData.id})
+                    allRequests.push({ day, hourstart, teacherId: userData.id })
                 } else {
-                    requestsHours.splice(requestsHours.indexOf(hours[i]), 1)
+                    allRequests.splice(allRequests.indexOf(hours[i]), 1)
                 }
             }}>
                 <h2>{hourstart}</h2>
@@ -36,7 +42,7 @@ export default function TeacherPage() {
         )
     }
 
-    function CreateHours({day}) {
+    function CreateHours({ day }) {
         const components = [];
         let hourstart = null;
         for (let i = 0; i < hours.length; i++) {
@@ -46,10 +52,46 @@ export default function TeacherPage() {
                 hourstart = `${hours[i]}:00`
             }
             components.push(
-                <Hour hourstart={hourstart} i={i} day={day}/>
+                <Hour hourstart={hourstart} i={i} day={day} />
             )
         };
 
+        return components;
+    }
+
+    function CreateHoursExist({ day }) {
+        const dayRequests = [];
+
+        requestsData.forEach(element => {
+            if (element.day === day) {
+                dayRequests.push(element);
+            }
+        });
+
+        const components = [];
+        let name = null;
+        let hourstart = null;
+        for (let i = 0; i < hours.length; i++) {
+            if (hours[i] < 10) {
+                hourstart = `0${hours[i]}:00`
+            } else {
+                hourstart = `${hours[i]}:00`
+            }
+
+            for (let j = 0; j < dayRequests.length; j++) {
+                if (hourstart === dayRequests[j].hourstart) {
+                    name = true;
+                    break
+                } else {
+                    name = false
+                }
+            }
+            components.push(
+                <div className={name ? 'yes' : 'no'}>
+                    <h2>{hourstart}</h2>
+                </div>
+            )
+        }
         return components;
     }
     return (
@@ -57,18 +99,54 @@ export default function TeacherPage() {
             <Header />
             <Title>Página do Professor</Title>
             <Subtitle>Disponibilidade na plataforma</Subtitle>
-            <Schedule>
-                {days.map(day => {
-                    return (
-                        <DaySpace>
-                            <p>{day}</p>
-                            <section>
-                                <CreateHours day={day} />
-                            </section>
-                        </DaySpace>
-                    )
-                })}
-            </Schedule>
+            <Buttons>
+                <button
+                    className={chooseRequestView ? 'yes' : 'no'}
+                    onClick={() => { setChooseRequestView(true) }}
+                >Criar nova Disponibilidade</button>
+                <button
+                    className={chooseRequestView ? 'no' : 'yes'}
+                    onClick={() => { setChooseRequestView(false) }}
+                >Ver meus horários existentes</button>
+            </Buttons>
+            {chooseRequestView
+                ?
+                <>
+                    <Schedule>
+                        {days.map(day => {
+                            return (
+                                <DaySpace>
+                                    <p>{day}</p>
+                                    <section>
+                                        <CreateHours day={day} />
+                                    </section>
+                                </DaySpace>
+                            )
+                        })}
+                    </Schedule>
+                    <button className="send">Enviar</button>
+                </>
+
+                :
+                <Schedule>
+                    {requestsData.length === 0
+                        ?
+                        <p>carregando...</p>
+                        :
+                        days.map(day => {
+                            return (
+                                <DaySpace>
+                                    <p>{day}</p>
+                                    <section>
+                                        <CreateHoursExist day={day} />
+                                    </section>
+                                </DaySpace>
+                            )
+                        })
+                    }
+                </Schedule>
+            }
+
         </Main>
     )
 }
@@ -82,6 +160,23 @@ const Main = styled.div`
     overflow-y: auto;
     overflow-x: hidden;
     scroll-behavior: auto;
+
+    .send{
+        width: 80px;
+        height: 30px;
+        color: white;
+        background-color: #000;
+        font-size: 16px;
+        font-family: 'Oswald';
+        border-radius: 5px;
+        margin-bottom: 50px;
+        cursor: pointer;
+    }
+
+    .send:hover{
+        background-color: #fedc00;
+        color: #000
+    }
 `;
 
 const Schedule = styled.div`
@@ -150,7 +245,7 @@ const Title = styled.h1`
     font-size: 32px;
     color: #fedc00;
     font-family: 'Oswald';
-    margin-bottom: 20px
+    margin-bottom: 20px;
 `
 
 const Subtitle = styled.p`
@@ -160,3 +255,29 @@ const Subtitle = styled.p`
     margin-bottom: 10px;
 `
 
+const Buttons = styled.section`
+    display: flex;
+    justify-content: space-around;
+    width: 100vw;
+    padding: 20px;
+
+    .yes {
+        background-color: #fedc00;
+        font-family: 'Oswald';
+        color: #000;
+        width: 200px;
+        height: 50px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .no {
+        background-color: #000;
+        font-family: 'Oswald';
+        color: white;
+        width: 200px;
+        height: 50px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+`
