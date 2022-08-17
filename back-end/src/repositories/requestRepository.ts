@@ -30,10 +30,19 @@ async function getRequestsByTeacherId( teacherId: string ) {
     return requests;
 };
 
+async function deleteRequests( teacherId: number ) {
+    await prisma.requests.deleteMany({
+        where: {
+            teacherId
+        }
+    });
+}
+
 const requestRepository = {
     createNewRequests,
     findRequest,
-    getRequestsByTeacherId
+    getRequestsByTeacherId,
+    deleteRequests
 };
 
 export default requestRepository;

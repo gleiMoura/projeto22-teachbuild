@@ -2,7 +2,9 @@ import requestRepository from "../repositories/requestRepository.js";
 import { requestType } from "../repositories/requestRepository.js";
 
 export async function createClassRequest(requests: requestType[]) {
-    let wrongRequest = null; 
+    await requestRepository.deleteRequests(requests[0].teacherId)
+
+   /*  let wrongRequest = null; 
     for(let i = 0; i < requests.length; i++) {
         wrongRequest = await requestRepository.findRequest(requests[i].teacherId, requests[i].day, requests[i].hourstart);
         break    
@@ -15,9 +17,8 @@ export async function createClassRequest(requests: requestType[]) {
                 status: 409
             }
         }
-    }
+    } */
     
-
     const data = await requestRepository.createNewRequests( requests );
 
     return data
