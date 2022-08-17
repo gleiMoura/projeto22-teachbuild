@@ -1,19 +1,24 @@
 import requestRepository from "../repositories/requestRepository.js";
 import { requestType } from "../repositories/requestRepository.js";
 
-export async function createClassRequest(request: requestType) {
-    const classRequest = await requestRepository.findRequest(request.teacherId, request.hourstart);
+export async function createClassRequest(requests: requestType[]) {
+    let wrongRequest = null; 
+    for(let i = 0; i < requests.length; i++) {
+        wrongRequest = await requestRepository.findRequest(requests[i].teacherId, requests[i].day, requests[i].hourstart);
+        break    
+    }
 
-    if (classRequest) {
+    if( wrongRequest !== null ) {
         throw {
             response: {
-                message: "There is this request in database",
+                message: "there is conflict with day or hour",
                 status: 409
             }
         }
     }
+    
 
-    const data = await requestRepository.createNewRequest(request);
+    const data = await requestRepository.createNewRequests( requests );
 
     return data
 };
@@ -21,7 +26,7 @@ export async function createClassRequest(request: requestType) {
 export async function getAllRequests(teacherId: string) {
     const requests = await requestRepository.getRequestsByTeacherId(teacherId);
 
-    if(!requests) {
+    if (!requests) {
         throw {
             response: {
                 message: "This teacher is not in database",

@@ -4,23 +4,20 @@ import { requests } from "@prisma/client";
 
 export type requestType = Omit<requests, 'id'>;
 
-async function findRequest(teacherId: number, hourstart: string) {
-    const data:requests = await prisma.requests.findFirst({
-        where: {
-            teacherId,
-            hourstart
-        }
+async function findRequest(teacherId: number, day: string, hourstart: string) {
+    const data = await prisma.requests.findFirst({
+        where: {teacherId, day, hourstart},
     });
 
     return data;
 }
 
-async function createNewRequest( request: requestType ) {
-    const requestData = await prisma.requests.create({
-        data: request
+async function createNewRequests( requests: requestType[] ) {
+    const requestsData = await prisma.requests.createMany({
+        data: requests
     });
 
-    return requestData
+    return requestsData
 };
 
 async function getRequestsByTeacherId( teacherId: string ) {
@@ -34,7 +31,7 @@ async function getRequestsByTeacherId( teacherId: string ) {
 };
 
 const requestRepository = {
-    createNewRequest,
+    createNewRequests,
     findRequest,
     getRequestsByTeacherId
 };
