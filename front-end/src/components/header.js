@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { IoIosExit } from "react-icons/io";
 
-export default function Timeline() {
+export default function TeachBuildHeader() {
     const navigate = useNavigate();
     const userData = JSON.parse(localStorage.getItem("data"));
     const [thereIsToken, setThereIsToken] = useState(false);
@@ -28,7 +28,9 @@ export default function Timeline() {
                         <h1 onClick={() => navigate("/userspage")}>TeachBuild</h1>
                     </section>
                     <section className="second">
-                        <p>{userData.name.split(" ")[0]}</p>
+                        <p onClick={() => {
+                          navigate("/teacherPage")
+                        }}>{userData.name.split(" ")[0]}</p>
                         <img src={userData.image} alt="user image" />
                         <IoIosExit className="logout" onClick={() => { logout() }} />
                     </section>

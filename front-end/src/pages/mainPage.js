@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Header from "../components/header";
 import Posts from "../components/posts";
 
-export default function Timeline() {
+export default function MainPage() {
     const navigate = useNavigate();
     const [thereIsToken, setThereIsToken] = useState(false);
 

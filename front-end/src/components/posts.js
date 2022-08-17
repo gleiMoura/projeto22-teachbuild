@@ -62,8 +62,8 @@ export default function Posts() {
         return (
             <>
                 <Buttons>
-                    <button onClick={() => { setChooseStudent(true) }}>See Students</button>
-                    <button onClick={() => { setChooseStudent(false) }}>class Request</button>
+                    <button onClick={() => { setChooseStudent(true) }}>Ver estudantes</button>
+                    <button onClick={() => { setChooseStudent(false) }}>Aulas agendadas</button>
                 </Buttons>
                 {chooseStudent === true && userData.type === 'teacher' ? students.map(student => {
                     return (

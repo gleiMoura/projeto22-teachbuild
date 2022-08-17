@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import SignIn from "../pages/signin";
 import SignUp from "../pages/signup";
-import UsersPage from "../pages/usersPage"
+import MainPage from "../pages/mainPage"
+import TeacherPage from "../pages/teacherPage";
 
 export default function App() {
     return (
@@ -10,7 +11,8 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/userspage" element={<UsersPage />} />
+                <Route path="/userspage" element={<MainPage />} />
+                <Route path="/teacherPage" element={<TeacherPage />} />
             </Routes>
         </BrowserRouter>
     );

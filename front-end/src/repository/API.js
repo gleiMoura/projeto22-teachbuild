@@ -20,6 +20,11 @@ function getTeachers(config) {
 function getStudents(config) {
     const promise = axios.get(`${BASE_URL}/students`, config);
     return promise;
+};
+
+function createRequest(config, body) {
+    const promise = axios.post(`${BASE_URL}/request`, body, config);
+    return promise;
 }
 
 const API = {
