@@ -22,16 +22,23 @@ function getStudents(config) {
     return promise;
 };
 
-function createRequest(config, body) {
+function createRequests(config, body) {
     const promise = axios.post(`${BASE_URL}/request`, body, config);
     return promise;
-}
+};
+
+function getRequestsToTeacher(config, teacherId) {
+    const promise = axios.get(`${BASE_URL}/request/${teacherId}`, config);
+    return promise;
+} 
 
 const API = {
     createUser,
     loginUser,
     getTeachers,
-    getStudents
+    getStudents,
+    createRequests,
+    getRequestsToTeacher
 };
 
 export default API;

@@ -1,21 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "../components/header";
+import API from "../repository/API";
 
 export default function TeacherPage() {
+    const userData = JSON.parse(localStorage.getItem("data"));
     const days = ["seg", "ter", "qua", "qui", "sex", "sab", "dom"];
     const hours = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
-    const requestsHours = [];
-    const userData = JSON.parse(localStorage.getItem("data"));
+    const requestsHours = []; //request with hours from table;
+
+    const config = {
+        headers: {
+            authorization: `Bearer ${userData.token}`
+        }
+    };
+
+   /*  useEffect(() => {
+        API.createRequests(config, allRequests)
+    }, []) */
 
     function Hour({ hourstart, i, day }) {
-        const [click, setClick] = useState(true);
         console.log(requestsHours)
+        const [click, setClick] = useState(true);
         return (
             <div className={click ? "no" : "yes"} onClick={() => {
                 setClick(!click);
                 if (click === true) {
-                    requestsHours.push({day, hour: hours[i]})
+                    requestsHours.push({day, hourstart, teacherId: userData.id})
                 } else {
                     requestsHours.splice(requestsHours.indexOf(hours[i]), 1)
                 }
