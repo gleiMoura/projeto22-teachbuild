@@ -24,7 +24,7 @@ export default function Signin() {
         API.loginUser(body)
             .then(response => {
                 localStorage.setItem("data", JSON.stringify(response.data));
-                navigate("/userspage");
+                navigate("/mainpage");
             }).catch(error => {
                 setValid(false);
                 setLoading(false);

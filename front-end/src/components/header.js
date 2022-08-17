@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { IoIosExit } from "react-icons/io";
+import MainPage from "../pages/mainPage";
 
 export default function TeachBuildHeader() {
     const navigate = useNavigate();
@@ -25,11 +26,11 @@ export default function TeachBuildHeader() {
         return (
                 <Header>
                     <section className="first">
-                        <h1 onClick={() => navigate("/userspage")}>TeachBuild</h1>
+                        <h1 onClick={() => navigate("/mainpage")}>TeachBuild</h1>
                     </section>
                     <section className="second">
                         <p onClick={() => {
-                          navigate("/teacherPage")
+                          {userData.type === 'teacher' ?navigate("/teacherpage") : navigate('/mainpage')}
                         }}>{userData.name.split(" ")[0]}</p>
                         <img src={userData.image} alt="user image" />
                         <IoIosExit className="logout" onClick={() => { logout() }} />
