@@ -6,6 +6,7 @@ import API from "../repository/API";
 
 export default function TeacherPage() {
     const userData = JSON.parse(localStorage.getItem("data"));
+    console.log(userData)
     const navigate = useNavigate()
     const days = ["seg", "ter", "qua", "qui", "sex", "sab", "dom"];
     const hours = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
@@ -129,6 +130,14 @@ export default function TeacherPage() {
                         await API.createRequests(config, allRequests).catch(error => console.log(error));
                         navigate('/teacherpage')
                     }}>Enviar</button>
+                    <Footer>
+                        <Likes>
+                            <p>{userData.likes}</p> 
+                        </Likes>
+                        <Wallet>
+                            <p>{userData.Wallet}</p>
+                        </Wallet>
+                    </Footer>
                 </>
 
                 :
@@ -283,5 +292,35 @@ const Buttons = styled.section`
         height: 50px;
         border-radius: 6px;
         cursor: pointer;
+    }
+`
+
+const Footer = styled.div`
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+`
+
+const Likes = styled.div`
+    width: 100px;
+    height: 50px;
+    background-color: #000;
+    border-radius: 6px;
+    p {
+        font-size: 16px;
+        font-family: 'Oswald';
+        color: white
+    }
+`
+const Wallet = styled.div`
+    width: 100px;
+    height: 50px;
+    background-color: #000;
+    border-radius: 6px;
+    p {
+        font-size: 16px;
+        font-family: 'Oswald';
+        color: white
     }
 `
