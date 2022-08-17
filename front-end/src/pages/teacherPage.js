@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/header";
 import API from "../repository/API";
 
 export default function TeacherPage() {
     const userData = JSON.parse(localStorage.getItem("data"));
+    const navigate = useNavigate()
     const days = ["seg", "ter", "qua", "qui", "sex", "sab", "dom"];
     const hours = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
     const allRequests = []; //request with hours from table;
@@ -16,15 +18,6 @@ export default function TeacherPage() {
             authorization: `Bearer ${userData.token}`
         }
     };
-
-    useEffect(() => {
-        API.getRequestsToTeacher(config, userData.id)
-            .then(response => {
-                setRequestsData(response.data);
-            }).catch(error => {
-                console.log(error);
-            })
-    }, []);
 
     function Hour({ hourstart, i, day }) {
         const [click, setClick] = useState(true);
@@ -106,7 +99,15 @@ export default function TeacherPage() {
                 >Criar nova Disponibilidade</button>
                 <button
                     className={chooseRequestView ? 'no' : 'yes'}
-                    onClick={() => { setChooseRequestView(false) }}
+                    onClick={async () => {
+                        setChooseRequestView(false);
+                        await API.getRequestsToTeacher(config, userData.id)
+                        .then(response => {
+                            setRequestsData(response.data);
+                        }).catch(error => {
+                            console.log(error);
+                        })
+                    }}
                 >Ver meus horários existentes</button>
             </Buttons>
             {chooseRequestView
@@ -124,7 +125,10 @@ export default function TeacherPage() {
                             )
                         })}
                     </Schedule>
-                    <button className="send">Enviar</button>
+                    <button className="send" onClick={async () => {
+                        await API.createRequests(config, allRequests).catch(error => console.log(error));
+                        navigate('/teacherpage')
+                    }}>Enviar</button>
                 </>
 
                 :
