@@ -36,17 +36,17 @@ export default function Posts() {
     if (userData.type === "student") {
         return (
             <>
-                <Title>Look for the best teacher here</Title>
+                <Title>Encontre os melhores professores aqui!!!</Title>
                 {teachers.map(teacher => {
                     return (
                         <Section>
                             <header>
-                                <p className="name">Teacher {teacher.name}</p>
+                                <p className="name">Prof. {teacher.name}</p>
                                 <img src={teacher.image} alt="teacher" />
                             </header>
                             <p className="text">{teacher.text}</p>
                             <footer>
-                                <p>discipline: {teacher.disciplines.name}</p>
+                                <p>disciplina: {teacher.disciplines.name}</p>
                                 <a href={teacher.mbti.link}>{teacher.mbti.name}</a>
                             </footer>
                             <div className="heart">
@@ -65,20 +65,25 @@ export default function Posts() {
                     <button onClick={() => { setChooseStudent(true) }}>Ver estudantes</button>
                     <button onClick={() => { setChooseStudent(false) }}>Aulas agendadas</button>
                 </Buttons>
-                {chooseStudent === true && userData.type === 'teacher' ? students.map(student => {
-                    return (
-                        <Section>
-                            <header>
-                                <p className="name">Student {student.name}</p>
-                                <img src={student.image} alt="teacher" />
-                            </header>
-                            <p className="text">{student.text}</p>
-                            <footer>
-                                <a href={student.mbti.link}>{student.mbti.name}</a>
-                            </footer>
-                        </Section>
-                    )
-                }) : <p>opa</p>}
+                {
+                    chooseStudent === true &&
+                    userData.type === 'teacher' &&
+                    students.length !==0 ?
+                    students.map(student => {
+                        return (
+                            <Section>
+                                <header>
+                                    <p className="name">Estudante {student.name}</p>
+                                    <img src={student.image} alt="teacher" />
+                                </header>
+                                <p className="text">{student.text}</p>
+                                <footer>
+                                    <a href={student.mbti.link}>{student.mbti.name}</a>
+                                </footer>
+                            </Section>
+                        )
+                    }) : <p>Não existem alunos cadastrados no momento.</p>
+                }
             </>
         )
     }
