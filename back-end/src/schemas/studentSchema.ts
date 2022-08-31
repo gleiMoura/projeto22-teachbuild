@@ -7,6 +7,7 @@ const studentSchema = joi.object<studentType>({
     image: joi.string().uri().required(),
     text: joi.string().required(),
     mbtiId: joi.number().required(),
+		disciplineId: joi.number().required(),
     password: joi.string().required()
 });
 
